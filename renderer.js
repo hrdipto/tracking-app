@@ -1,3 +1,38 @@
-// This file is required by the index.html file and will
-// be executed in the renderer process for that window.
-// All of the Node.js APIs are available in this process.
+let [seconds, minutes, hours] = [0, 0, 0];
+let timerRef = document.querySelector(".timerDisplay");
+let int = null;
+
+document.getElementById("startTimer").addEventListener("click", () => {
+  if (int !== null) {
+    clearInterval(int);
+  }
+  int = setInterval(displayTimer, 1000);
+});
+
+document.getElementById("pauseTimer").addEventListener("click", () => {
+  clearInterval(int);
+});
+
+document.getElementById("resetTimer").addEventListener("click", () => {
+  clearInterval(int);
+  [seconds, minutes, hours] = [0, 0, 0];
+  timerRef.innerHTML = "00 : 00 : 00 ";
+});
+
+function displayTimer() {
+  seconds++;
+  if (seconds == 60) {
+    seconds = 0;
+    minutes++;
+    if (minutes == 60) {
+      minutes = 0;
+      hours++;
+    }
+  }
+
+  let h = hours < 10 ? "0" + hours : hours;
+  let m = minutes < 10 ? "0" + minutes : minutes;
+  let s = seconds < 10 ? "0" + seconds : seconds;
+
+  timerRef.innerHTML = ` ${h} : ${m} : ${s} `;
+}
