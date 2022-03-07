@@ -44,6 +44,34 @@ var temp = {
         },
       ],
     },
+    {
+      id: 1,
+      name: "Automated Life Entry",
+      boards: [
+        {
+          name: "Sprint 2",
+          cards: [
+            {
+              name: "Create a task tracker app using Electron",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ],
 };
 
@@ -56,6 +84,64 @@ function listAllTask() {
   // taskRef.map((task, idx) => {
   //   task.innerText = tasks[idx];
   // });
+}
+
+function listAllProject() {
+  var projectRef = document.getElementById("project");
+  var projects = temp["projects"];
+  var htmlText = "";
+  projects.map((project) => {
+    htmlText +=
+      "<option value='" +
+      project["name"] +
+      "' >" +
+      project["name"] +
+      "</option>";
+  });
+  projectRef.innerHTML = htmlText;
+  // taskRef.map((task, idx) => {
+  //   task.innerText = tasks[idx];
+  // });
+}
+
+function boardUpdate(projectRef) {
+  console.log("Update");
+  var boardRef = document.getElementById("board");
+  var projects = temp["projects"];
+  var htmlText = "";
+  for (var i = 0; i < projects.length; i++) {
+    if (projects[i]["name"] === projectRef) {
+      var boards = temp["projects"][i]["boards"];
+      for (var j = 0; j < boards.length; j++) {
+        htmlText +=
+          "<option value='" +
+          boards[j]["name"] +
+          "' >" +
+          boards[j]["name"] +
+          "</option>";
+      }
+
+      boardRef.innerHTML = htmlText;
+      break;
+    }
+  }
+  projects.map((project) => {
+    if (project === projectRef) {
+      htmlText +=
+        "<option value='" +
+        project["name"] +
+        "' >" +
+        project["name"] +
+        "</option>";
+    }
+    htmlText +=
+      "<option value='" +
+      project["name"] +
+      "' >" +
+      project["name"] +
+      "</option>";
+  });
+  // projectRef.innerHTML = htmlText;
 }
 
 function listAllSoftware() {
@@ -91,6 +177,7 @@ function listAllSoftware() {
     });
   }
 }
+listAllProject();
 listAllTask();
 
 listAllSoftware();
@@ -100,6 +187,10 @@ document.getElementById("startTimer").addEventListener("click", () => {
     clearInterval(int);
   }
   int = setInterval(displayTimer, 1000);
+});
+
+document.getElementById("project").addEventListener("change", (event) => {
+  boardUpdate(event.target.value);
 });
 
 document.getElementById("pauseTimer").addEventListener("click", () => {
