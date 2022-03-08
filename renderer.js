@@ -40,6 +40,62 @@ var temp = {
                 },
               ],
             },
+            {
+              name: "Update Module",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: "Sprint 2",
+          cards: [
+            {
+              name: "Built knowledge base dialog",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
+            {
+              name: "deploy base dialog",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
           ],
         },
       ],
@@ -70,16 +126,55 @@ var temp = {
             },
           ],
         },
+        {
+          name: "Sprint 3",
+          cards: [
+            {
+              name: "Radassist Update",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
+            {
+              name: "Keycloak setup",
+              e: "Create an app",
+              tasks: [
+                {
+                  id: 41,
+                  name: "Learn and explore electron",
+                  time: "2d",
+                  softwares: ["chrome", "vs code"],
+                },
+                {
+                  id: 42,
+                  nam: "1d 4h",
+                  softwares: ["vs code", "chrome"],
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
   ],
 };
 
-function listAllTask() {
+function listAllTask(tasklist = tasks) {
   console.log(temp);
   var taskRef = document.getElementsByClassName("taskName");
   [].forEach.call(taskRef, function (task, idx) {
-    task.innerText = tasks[idx];
+    task.innerText = tasklist[idx];
   });
   // taskRef.map((task, idx) => {
   //   task.innerText = tasks[idx];
@@ -102,6 +197,51 @@ function listAllProject() {
   // taskRef.map((task, idx) => {
   //   task.innerText = tasks[idx];
   // });
+}
+
+function cardUpdate(boardRef, projectRef) {
+  console.log("Update: ", boardRef, projectRef);
+  var taskRef = document.getElementById("taskList");
+  var projects = temp["projects"];
+  var htmlText = "";
+  var tasks = "";
+  for (var i = 0; i < projects.length; i++) {
+    if (projects[i]["name"] === projectRef) {
+      var boards = temp["projects"][i]["boards"];
+      for (var j = 0; j < boards.length; j++) {
+        if (boards[j]["name"] === boardRef) {
+          tasks = boards[j]["cards"];
+          for (var k = 0; k < tasks.length; k++) {
+            htmlText +=
+              "<input type='checkbox' name='task_list' value='" +
+              tasks[k]["name"] +
+              "'>" +
+              tasks[k]["name"] +
+              "<br><br> ";
+          }
+          taskRef.innerHTML = htmlText;
+
+          break;
+        }
+      }
+    }
+  }
+  projects.map((project) => {
+    if (project === projectRef) {
+      htmlText +=
+        "<option value='" +
+        project["name"] +
+        "' >" +
+        project["name"] +
+        "</option>";
+    }
+    htmlText +=
+      "<option value='" +
+      project["name"] +
+      "' >" +
+      project["name"] +
+      "</option>";
+  });
 }
 
 function boardUpdate(projectRef) {
@@ -180,8 +320,6 @@ function listAllSoftware() {
 listAllProject();
 listAllTask();
 
-listAllSoftware();
-
 document.getElementById("startTimer").addEventListener("click", () => {
   if (int !== null) {
     clearInterval(int);
@@ -192,7 +330,9 @@ document.getElementById("startTimer").addEventListener("click", () => {
 document.getElementById("project").addEventListener("change", (event) => {
   boardUpdate(event.target.value);
 });
-
+document.getElementById("board").addEventListener("change", (event) => {
+  cardUpdate(event.target.value, document.getElementById("project").value);
+});
 document.getElementById("pauseTimer").addEventListener("click", () => {
   clearInterval(int);
 });
@@ -250,3 +390,16 @@ document.getElementById("stopTimer").addEventListener("click", () => {
   console.log("Time: ", time);
   console.log("Current Software for this project: ", softwareForProject);
 });
+
+document.getElementById("taskbtn").onclick = function () {
+  var markedCheckbox = document.querySelectorAll(
+    'input[type="checkbox"]:checked'
+  );
+  var tasklist = [];
+  for (var checkbox of markedCheckbox) {
+    tasklist.push(checkbox.value);
+  }
+
+  listAllTask(tasklist);
+  listAllSoftware();
+};
