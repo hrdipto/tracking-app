@@ -1,4 +1,5 @@
 const { getAllInstalledSoftware } = require("fetch-installed-software");
+const fs = require("fs");
 let [seconds, minutes, hours] = [0, 0, 0];
 let timerRef = document.querySelector(".timerDisplay");
 let currentSoftwareRef = document.querySelector(".currentSoftware");
@@ -169,6 +170,75 @@ var temp = {
     },
   ],
 };
+
+/////////////////////////////////////////////////////////
+///////////////////////// INDEX.HTML
+/////////////////////////////////////////////////////////
+document.getElementById("formSubmit").addEventListener("click", () => {
+  console.log("CLICK");
+  var userID = document.getElementById("xid").value;
+  fs.writeFile("uid.txt", userID, (err) => {
+    console.log(userID);
+    if (err) {
+      console.error(err);
+      return;
+    }
+    //file written successfully
+  });
+});
+
+/////////////////////////////////////////////////////////
+///////////////////////// task-pick.HTML
+/////////////////////////////////////////////////////////
+
+for (const dropdown of document.querySelectorAll(".custom-select-wrapper")) {
+  dropdown.addEventListener("click", function () {
+    this.querySelector(".custom-select").classList.toggle("open");
+  });
+}
+
+for (const option of document.querySelectorAll(".custom-option")) {
+  option.addEventListener("click", function () {
+    if (!this.classList.contains("selected")) {
+      this.parentNode
+        .querySelector(".custom-option.selected")
+        .classList.remove("selected");
+      this.classList.add("selected");
+      this.closest(".custom-select").querySelector(
+        ".custom-select__trigger span"
+      ).textContent = this.textContent;
+    }
+  });
+}
+
+window.addEventListener("click", function (e) {
+  for (const select of document.querySelectorAll(".custom-select")) {
+    if (!select.contains(e.target)) {
+      select.classList.remove("open");
+    }
+  }
+});
+
+function selectOption(index) {
+  var optionOnIdx = document.querySelector(
+    ".custom-option:nth-child(" + index + ")"
+  );
+  var optionSelected = document.querySelector(".custom-option.selected");
+  if (optionOnIdx !== optionSelected) {
+    optionSelected.parentNode
+      .querySelector(".custom-option.selected")
+      .classList.remove("selected");
+    optionOnIdx.classList.add("selected");
+    optionOnIdx
+      .closest(".custom-select")
+      .querySelector(".custom-select__trigger span").textContent =
+      optionOnIdx.textContent;
+  }
+}
+
+document.querySelector("button").addEventListener("click", function () {
+  selectOption(2);
+});
 
 function listAllTask(tasklist = tasks) {
   console.log(temp);
