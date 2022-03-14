@@ -1,5 +1,6 @@
 const { getAllInstalledSoftware } = require("fetch-installed-software");
 const fs = require("fs");
+const { ipcRenderer } = require("electron");
 let [seconds, minutes, hours] = [0, 0, 0];
 let timerRef = document.querySelector(".timerDisplay");
 let currentSoftwareRef = document.querySelector(".currentSoftware");
@@ -239,6 +240,10 @@ function selectOption(index) {
 document.querySelector("button").addEventListener("click", function () {
   selectOption(2);
 });
+
+/////////////////////////////////////////////////////////
+///////////////////////// time-entry.HTML
+/////////////////////////////////////////////////////////
 
 function listAllTask(tasklist = tasks) {
   console.log(temp);
