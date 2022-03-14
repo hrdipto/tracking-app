@@ -1,5 +1,6 @@
 // Modules
 const { app, BrowserWindow, ipcMain } = require("electron");
+const fs = require("fs");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -31,9 +32,47 @@ function createWindow() {
   });
 }
 
-// ipcMain.on(("channel1", (e, args) => {
-//   console.log
-// }))
+ipcMain.on("userid", (e, userID) => {
+  fs.writeFile("uid.txt", userID, (err) => {
+    console.log(userID);
+    if (err) {
+      console.error(err);
+      return;
+    }
+    //file written successfully
+  });
+});
+
+ipcMain.on("savetask", (e, saveTask) => {
+  var file = fs.createWriteStream("tasks.txt");
+  console.log("main.js" + saveTask);
+  var array = new Set(fs.readFileSync("tasks.txt", "utf8").split("\n"));
+  saveTask = new Set([...array, ...saveTask]);
+  for (let task of saveTask) {
+    file.write(task + "\n");
+  }
+  file.end();
+
+  // fs.writeFile("tasks.txt", saveTask, (err) => {
+  //   console.log(saveTask);
+  //   if (err) {
+  //     console.error(err);
+  //     return;
+  //   }
+  //   //file written successfully
+  // });
+  // fs.appendFile("tasks.txt", task + "\n", (err) => {
+  //   if (err) {
+  //     console.log(err);
+  //   }
+  // });
+});
+
+ipcMain.on("tasklist", function (event, arg) {
+  var array = fs.readFileSync("tasks.txt", "utf8").split("\n");
+
+  event.returnValue = array;
+});
 
 // Electron `app` is ready
 app.on("ready", createWindow);

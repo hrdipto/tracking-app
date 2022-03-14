@@ -1,0 +1,8 @@
+version: 1.0.0
+files:
+  - url: master-electron-Setup-1.0.0.exe
+    sha512: MnjTMSwv9dvplcftfh06Xvp9poWlMWs+KQJNwc4pb5Cv37h5I3DCzIOpWGqKh76cJ8a2qqsTDsVXSyZvuLxcrg==
+    size: 49691046
+path: master-electron-Setup-1.0.0.exe
+sha512: MnjTMSwv9dvplcftfh06Xvp9poWlMWs+KQJNwc4pb5Cv37h5I3DCzIOpWGqKh76cJ8a2qqsTDsVXSyZvuLxcrg==
+releaseDate: '2022-03-14T08:15:41.929Z'

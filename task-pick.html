@@ -9,75 +9,58 @@
   </head>
   <body>
     <div class="container">
-      <div class="custom-select-wrapper">
-        <div class="custom-select">
-          <div class="custom-select__trigger">
-            <span>Automation Time entry</span>
+      <div class="project-select-wrapper custom-select-wrapper">
+        <div class="project-select custom-select">
+          <div class="project-select__trigger custom-select__trigger">
+            <span>Select Project</span>
             <div class="arrow"></div>
           </div>
-          <div class="custom-options">
-            <span class="custom-option selected" data-value="tesla">Tesla</span>
-            <span class="custom-option" data-value="volvo">Volvo</span>
-            <span class="custom-option" data-value="mercedes">Mercedes</span>
-          </div>
+          <div class="project-options custom-options" id="project"></div>
         </div>
       </div>
     </div>
     <div class="container">
-      <div class="custom-select-wrapper">
-        <div class="custom-select">
-          <div class="custom-select__trigger">
-            <span>Sprint2</span>
+      <div class="board-select-wrapper custom-select-wrapper">
+        <div class="board-select custom-select">
+          <div class="board-select__trigger custom-select__trigger">
+            <span>Select Board</span>
             <div class="arrow"></div>
           </div>
-          <div class="custom-options">
-            <span class="custom-option selected" data-value="tesla">Tesla</span>
-            <span class="custom-option" data-value="volvo">Volvo</span>
-            <span class="custom-option" data-value="mercedes">Mercedes</span>
-          </div>
+          <div class="board-options custom-options" id="board"></div>
         </div>
       </div>
     </div>
     <div class="scrollablepart">
       <div class="scroll">
-        It is a good platform to learn programming. It is an educational
-        website. Prepare for the Recruitment drive of product based companies
-        like Microsoft, Amazon, Adobe etc with a free online placement
-        preparation course. The course focuses on various MCQ's & Coding
-        question likely to be asked in the interviews & make your upcoming
-        placement season efficient and successful. Also, any geeks can help
-        other geeks by writing articles on the GeeksforGeeks, publishing
-        articles follow few steps that are Articles that need little
-        modification/improvement from reviewers are published first. To quickly
-        get your articles reviewed, please refer existing articles, their
-        formatting style, coding style, and try to make you are close to them.
-        In case you are a beginner, you may refer Guidelines to write an Article
+        <fieldset>
+          <legend>Select task:</legend>
+          <div id="taskList"></div>
+          <a id="taskbtn">Save</a>
+        </fieldset>
       </div>
     </div>
     <h1>Saved List :</h1>
     <div class="scroll">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
-      <div>4</div>
+      <ul id="taskName">
+        <li>
+          <div class="taskList">
+            <span class="taskName">2. Example Task</span>
+            <span class="timerDisplay">00 : 00 : 00 </span>
+
+            <a id="removeTask">Remove</a>
+          </div>
+        </li>
+      </ul>
     </div>
 
-    <button class="button-12" role="button">Save</button>
-    <button href="" class="button-12" role="button">
-      Let's start the date
-    </button>
+    <a href="#" class="a-12" role="a" id="saveTask">Save</a>
+    <a href="time-entry.html" id="time-entry" class="a-12" role="a">
+      Start Tracking
+    </a>
 
     <script>
       // You can also require other files to run in this process
-      require("./dropdown.js");
+      require("./renderer.js");
     </script>
   </body>
 </html>

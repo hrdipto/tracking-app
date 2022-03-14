@@ -1,15 +1,15 @@
-const { getAllInstalledSoftware } = require("fetch-installed-software");
 const fs = require("fs");
 const { ipcRenderer } = require("electron");
-let [seconds, minutes, hours] = [0, 0, 0];
 let timerRef = document.querySelector(".timerDisplay");
+let [seconds, minutes, hours] = [0, 0, 0];
+
 let currentSoftwareRef = document.querySelector(".currentSoftware");
 let int = null;
 var softwareList = null;
 var softwareHTMLList = "";
 var softwareForProject = [];
 
-var tasks = ["Learn and explore electron", "Create an app"];
+var tasks = new Set();
 
 var temp = {
   user: {
@@ -175,86 +175,20 @@ var temp = {
 /////////////////////////////////////////////////////////
 ///////////////////////// INDEX.HTML
 /////////////////////////////////////////////////////////
-document.getElementById("formSubmit").addEventListener("click", () => {
-  console.log("CLICK");
-  var userID = document.getElementById("xid").value;
-  fs.writeFile("uid.txt", userID, (err) => {
-    console.log(userID);
-    if (err) {
-      console.error(err);
-      return;
-    }
-    //file written successfully
+var formSubmit = document.getElementById("formSubmit");
+if (formSubmit) {
+  formSubmit.addEventListener("click", () => {
+    console.log("CLICK");
+    var userID = document.getElementById("xid").value;
+    ipcRenderer.send("userid", userID);
   });
-});
+}
 
 /////////////////////////////////////////////////////////
 ///////////////////////// task-pick.HTML
 /////////////////////////////////////////////////////////
 
-for (const dropdown of document.querySelectorAll(".custom-select-wrapper")) {
-  dropdown.addEventListener("click", function () {
-    this.querySelector(".custom-select").classList.toggle("open");
-  });
-}
-
-for (const option of document.querySelectorAll(".custom-option")) {
-  option.addEventListener("click", function () {
-    if (!this.classList.contains("selected")) {
-      this.parentNode
-        .querySelector(".custom-option.selected")
-        .classList.remove("selected");
-      this.classList.add("selected");
-      this.closest(".custom-select").querySelector(
-        ".custom-select__trigger span"
-      ).textContent = this.textContent;
-    }
-  });
-}
-
-window.addEventListener("click", function (e) {
-  for (const select of document.querySelectorAll(".custom-select")) {
-    if (!select.contains(e.target)) {
-      select.classList.remove("open");
-    }
-  }
-});
-
-function selectOption(index) {
-  var optionOnIdx = document.querySelector(
-    ".custom-option:nth-child(" + index + ")"
-  );
-  var optionSelected = document.querySelector(".custom-option.selected");
-  if (optionOnIdx !== optionSelected) {
-    optionSelected.parentNode
-      .querySelector(".custom-option.selected")
-      .classList.remove("selected");
-    optionOnIdx.classList.add("selected");
-    optionOnIdx
-      .closest(".custom-select")
-      .querySelector(".custom-select__trigger span").textContent =
-      optionOnIdx.textContent;
-  }
-}
-
-document.querySelector("button").addEventListener("click", function () {
-  selectOption(2);
-});
-
-/////////////////////////////////////////////////////////
-///////////////////////// time-entry.HTML
-/////////////////////////////////////////////////////////
-
-function listAllTask(tasklist = tasks) {
-  console.log(temp);
-  var taskRef = document.getElementsByClassName("taskName");
-  [].forEach.call(taskRef, function (task, idx) {
-    task.innerText = tasklist[idx];
-  });
-  // taskRef.map((task, idx) => {
-  //   task.innerText = tasks[idx];
-  // });
-}
+////////////////////    Project      //////////////////
 
 function listAllProject() {
   var projectRef = document.getElementById("project");
@@ -262,17 +196,175 @@ function listAllProject() {
   var htmlText = "";
   projects.map((project) => {
     htmlText +=
-      "<option value='" +
+      "<span class='project-option custom-option' data-value='" +
       project["name"] +
-      "' >" +
+      "'>" +
       project["name"] +
-      "</option>";
+      "</span>";
   });
   projectRef.innerHTML = htmlText;
-  // taskRef.map((task, idx) => {
-  //   task.innerText = tasks[idx];
-  // });
+
+  /// Save Task
+
+  //// Button Dropdown
+
+  for (const dropdown of document.querySelectorAll(".project-select-wrapper")) {
+    dropdown.addEventListener("click", function () {
+      this.querySelector(".project-select").classList.toggle("open");
+    });
+  }
+
+  for (const option of document.querySelectorAll(".project-option")) {
+    option.addEventListener("click", function () {
+      if (!this.classList.contains("selected")) {
+        if (this.parentNode.querySelector(".project-option.selected")) {
+          this.parentNode
+            .querySelector(".project-option.selected")
+            .classList.remove("selected");
+        }
+        this.classList.add("selected");
+        this.closest(".project-select").querySelector(
+          ".project-select__trigger span"
+        ).textContent = this.textContent;
+
+        boardUpdate(this.textContent);
+      }
+    });
+  }
+  window.addEventListener("click", function (e) {
+    for (const select of document.querySelectorAll(".project-select")) {
+      if (!select.contains(e.target)) {
+        select.classList.remove("open");
+      }
+    }
+  });
+
+  function selectOption(index) {
+    var optionOnIdx = document.querySelector(
+      ".project-option:nth-child(" + index + ")"
+    );
+    var optionSelected = document.querySelector(".project-option.selected");
+    if (optionOnIdx !== optionSelected) {
+      if (
+        this.parentNode &&
+        this.parentNode.querySelector(".project-option.selected")
+      ) {
+        optionSelected.parentNode
+          .querySelector(".project-option.selected")
+          .classList.remove("selected");
+      }
+      optionOnIdx.classList.add("selected");
+      optionOnIdx
+        .closest(".project-select")
+        .querySelector(".project-select__trigger span").textContent =
+        optionOnIdx.textContent;
+    }
+  }
 }
+
+listAllProject();
+
+////////////////////    Board      //////////////////
+
+function boardUpdate(projectRef) {
+  console.log("Update");
+  console.log(projectRef);
+  var boardRef = document.getElementById("board");
+  var projects = temp["projects"];
+  var htmlText = "";
+  for (var i = 0; i < projects.length; i++) {
+    if (projects[i]["name"] === projectRef) {
+      var boards = temp["projects"][i]["boards"];
+      for (var j = 0; j < boards.length; j++) {
+        htmlText +=
+          "<span class='board-option custom-option' data-value='" +
+          boards[j]["name"] +
+          "'>" +
+          boards[j]["name"] +
+          "</span>";
+      }
+
+      boardRef.innerHTML = htmlText;
+      break;
+    }
+  }
+
+  //// Button Dropdown
+
+  for (const dropdown of document.querySelectorAll(".board-select-wrapper")) {
+    dropdown.addEventListener("click", function () {
+      this.querySelector(".board-select").classList.toggle("open");
+    });
+  }
+
+  for (const option of document.querySelectorAll(".board-option")) {
+    option.addEventListener("click", function () {
+      if (!this.classList.contains("selected")) {
+        if (this.parentNode.querySelector(".board-option.selected")) {
+          this.parentNode
+            .querySelector(".board-option.selected")
+            .classList.remove("selected");
+        }
+        this.classList.add("selected");
+        this.closest(".board-select").querySelector(
+          ".board-select__trigger span"
+        ).textContent = this.textContent;
+
+        boardUpdate(this.textContent);
+        cardUpdate(this.textContent, projectRef);
+      }
+    });
+  }
+  window.addEventListener("click", function (e) {
+    for (const select of document.querySelectorAll(".board-select")) {
+      if (!select.contains(e.target)) {
+        select.classList.remove("open");
+      }
+    }
+  });
+
+  function selectOption(index) {
+    var optionOnIdx = document.querySelector(
+      ".board-option:nth-child(" + index + ")"
+    );
+    var optionSelected = document.querySelector(".board-option.selected");
+    if (
+      this.parentNode &&
+      this.parentNode.querySelector(".project-option.selected")
+    ) {
+      if (optionOnIdx !== optionSelected) {
+        optionSelected.parentNode
+          .querySelector(".board-option.selected")
+          .classList.remove("selected");
+      }
+      optionOnIdx.classList.add("selected");
+      optionOnIdx
+        .closest(".board-select")
+        .querySelector(".board-select__trigger span").textContent =
+        optionOnIdx.textContent;
+    }
+  }
+
+  // projects.map((project) => {
+  //   if (project === projectRef) {
+  //     htmlText +=
+  //       "<option value='" +
+  //       project["name"] +
+  //       "' >" +
+  //       project["name"] +
+  //       "</option>";
+  //   }
+  //   htmlText +=
+  //     "<option value='" +
+  //     project["name"] +
+  //     "' >" +
+  //     project["name"] +
+  //     "</option>";
+  // });
+  // projectRef.innerHTML = htmlText;
+}
+
+////////////////////    Task List      //////////////////
 
 function cardUpdate(boardRef, projectRef) {
   console.log("Update: ", boardRef, projectRef);
@@ -301,106 +393,100 @@ function cardUpdate(boardRef, projectRef) {
       }
     }
   }
-  projects.map((project) => {
-    if (project === projectRef) {
-      htmlText +=
-        "<option value='" +
-        project["name"] +
-        "' >" +
-        project["name"] +
-        "</option>";
+
+  document.getElementById("taskbtn").onclick = function () {
+    var markedCheckbox = document.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
+    var tasklist = [];
+    for (var checkbox of markedCheckbox) {
+      tasklist.push(checkbox.value);
     }
-    htmlText +=
-      "<option value='" +
-      project["name"] +
-      "' >" +
-      project["name"] +
-      "</option>";
-  });
+
+    listAllTask(tasklist);
+    // listAllSoftware();
+  };
+  // projects.map((project) => {
+  //   if (project === projectRef) {
+  //     htmlText +=
+  //       "<option value='" +
+  //       project["name"] +
+  //       "' >" +
+  //       project["name"] +
+  //       "</option>";
+  //   }
+  //   htmlText +=
+  //     "<option value='" +
+  //     project["name"] +
+  //     "' >" +
+  //     project["name"] +
+  //     "</option>";
+  // });
 }
 
-function boardUpdate(projectRef) {
-  console.log("Update");
-  var boardRef = document.getElementById("board");
-  var projects = temp["projects"];
+function listAllTask(tasklist = tasks) {
+  console.log(temp);
+  var taskRef = document.getElementById("taskName");
+
   var htmlText = "";
-  for (var i = 0; i < projects.length; i++) {
-    if (projects[i]["name"] === projectRef) {
-      var boards = temp["projects"][i]["boards"];
-      for (var j = 0; j < boards.length; j++) {
-        htmlText +=
-          "<option value='" +
-          boards[j]["name"] +
-          "' >" +
-          boards[j]["name"] +
-          "</option>";
-      }
-
-      boardRef.innerHTML = htmlText;
-      break;
-    }
-  }
-  projects.map((project) => {
-    if (project === projectRef) {
-      htmlText +=
-        "<option value='" +
-        project["name"] +
-        "' >" +
-        project["name"] +
-        "</option>";
-    }
+  tasklist.map((task, idx) => {
+    tasks.add(task);
     htmlText +=
-      "<option value='" +
-      project["name"] +
-      "' >" +
-      project["name"] +
-      "</option>";
+      "<li><div class='taskList'><span class='taskName'>" +
+      parseInt(idx) +
+      1 +
+      ": " +
+      task;
+    +"</span><button id='removeTask'>Remove</button></div> </li>";
   });
-  // projectRef.innerHTML = htmlText;
-}
 
-function listAllSoftware() {
-  var items = document.getElementsByClassName("taskName");
-  console.log(items);
-  if (!softwareList) {
-    getAllInstalledSoftware().then(function (result) {
-      console.log("first init", result); // "initResolve"
-      softwareList = result;
+  taskRef.innerHTML = htmlText;
 
-      if (softwareList) {
-        softwareList.map((software) => {
-          console.log(software["DisplayName"]);
+  var taskSave = document.getElementById("saveTask");
 
-          if (software["DisplayName"]) {
-            softwareHTMLList +=
-              "<option value='" +
-              software["DisplayName"] +
-              "' >" +
-              software["DisplayName"] +
-              "</option>";
-          }
-        });
-
-        console.log(softwareList);
-        // document.querySelector(".software").innerHTML = softwareHTMLList;
-
-        var softwareRef = document.getElementsByClassName("software");
-        [].forEach.call(softwareRef, function (task, idx) {
-          task.innerHTML = softwareHTMLList;
-        });
-      }
+  if (taskSave) {
+    taskSave.addEventListener("click", () => {
+      console.log("CLICK", tasks);
+      ipcRenderer.send("savetask", tasks);
     });
   }
 }
-listAllProject();
-listAllTask();
 
-document.getElementById("startTimer").addEventListener("click", () => {
-  if (int !== null) {
-    clearInterval(int);
-  }
-  int = setInterval(displayTimer, 1000);
-});
+/////////////////////////////////////////////////////////
+///////////////////////// time-entry.HTML
+/////////////////////////////////////////////////////////
+
+// function listAllTask(tasklist = tasks) {
+//   console.log(temp);
+//   var taskRef = document.getElementsByClassName("taskName");
+//   [].forEach.call(taskRef, function (task, idx) {
+//     task.innerText = tasklist[idx];
+//   });
+//   // taskRef.map((task, idx) => {
+//   //   task.innerText = tasks[idx];
+//   // });
+// }
+
+// function listAllProject() {
+//   var projectRef = document.getElementById("project");
+//   var projects = temp["projects"];
+//   var htmlText = "";
+//   projects.map((project) => {
+//     htmlText +=
+//       "<option value='" +
+//       project["name"] +
+//       "' >" +
+//       project["name"] +
+//       "</option>";
+//   });
+//   projectRef.innerHTML = htmlText;
+//   // taskRef.map((task, idx) => {
+//   //   task.innerText = tasks[idx];
+//   // });
+// }
+
+// listAllProject();
+// listAllTask();
 
 document.getElementById("project").addEventListener("change", (event) => {
   boardUpdate(event.target.value);
@@ -408,36 +494,14 @@ document.getElementById("project").addEventListener("change", (event) => {
 document.getElementById("board").addEventListener("change", (event) => {
   cardUpdate(event.target.value, document.getElementById("project").value);
 });
-document.getElementById("pauseTimer").addEventListener("click", () => {
-  clearInterval(int);
-});
 
-function displayTimer() {
-  seconds++;
+var pauseTimer = document.getElementById("pauseTimer");
 
-  if (seconds == 60) {
-    seconds = 0;
-    minutes++;
-    if (minutes == 60) {
-      minutes = 0;
-      hours++;
-    }
-  }
-
-  let h = hours < 10 ? "0" + hours : hours;
-  let m = minutes < 10 ? "0" + minutes : minutes;
-  let s = seconds < 10 ? "0" + seconds : seconds;
-
-  timerRef.innerHTML = ` ${h} : ${m} : ${s} `;
+if (pauseTimer) {
+  document.getElementById("pauseTimer").addEventListener("click", () => {
+    clearInterval(int);
+  });
 }
-
-document.getElementById("addSoftware").addEventListener("click", () => {
-  var e = document.getElementById("software");
-  softwareForProject.push(e.value);
-  currentSoftwareRef.innerHTML = currentSoftwareRef.innerHTML + e.value + ", ";
-
-  console.log("Current Software for this project: ", softwareForProject);
-});
 
 document.getElementById("stopTimer").addEventListener("click", () => {
   let h = hours < 10 ? "0" + hours : hours;
@@ -466,15 +530,15 @@ document.getElementById("stopTimer").addEventListener("click", () => {
   console.log("Current Software for this project: ", softwareForProject);
 });
 
-document.getElementById("taskbtn").onclick = function () {
-  var markedCheckbox = document.querySelectorAll(
-    'input[type="checkbox"]:checked'
-  );
-  var tasklist = [];
-  for (var checkbox of markedCheckbox) {
-    tasklist.push(checkbox.value);
-  }
+// document.getElementById("taskbtn").onclick = function () {
+//   var markedCheckbox = document.querySelectorAll(
+//     'input[type="checkbox"]:checked'
+//   );
+//   var tasklist = [];
+//   for (var checkbox of markedCheckbox) {
+//     tasklist.push(checkbox.value);
+//   }
 
-  listAllTask(tasklist);
-  listAllSoftware();
-};
+//   listAllTask(tasklist);
+//   listAllSoftware();
+// };
