@@ -2,13 +2,12 @@ const { ipcRenderer } = require("electron");
 const { getAllInstalledSoftware } = require("fetch-installed-software");
 
 var currentTask = [];
-let [seconds, minutes, hours] = [0, 0, 0];
 var time = "";
 
-let int = null;
 var softwareList = null;
 var softwareHTMLList = "";
 var softwareForProject = [];
+task_list = [];
 
 var temp = {
   user: {
@@ -185,15 +184,20 @@ function timeEntry() {
         idx +
         "'>" +
         task +
-        "</span><span class='timerDisplay'>00 : 00 : 00 </span><button id='pauseTimer'>Pause</button><button id='startTimer'>Start</button><button id='stopTimer'>Stop</button></div><div><p>Current software: <span class='currentSoftware'></span></p></div><div class='softwareList'><label for='software'>Choose a software:</label> <select id='software' class='software'></select><button id='addSoftware'>Add</button></div></li>";
+        "</span><span class='timerDisplay'>00 : 00 : 00 </span><button id='pauseTimer'>Pause</button><button class='startTimer' onclick='startTimer(" +
+        idx +
+        ")'>Start</button><button id='stopTimer'>Stop</button></div><div><p>Current software: <span class='currentSoftware'></span></p></div><div class='softwareList'><label for='software'>Choose a software:</label> <select id='software' class='software'></select><button id='addSoftware'>Add</button></div></li>";
     }
   });
   taskRef.innerHTML = htmlText;
 }
 timeEntry();
-let timerRef = document.getElementsByClassName("timerDisplay")[0];
+var [seconds, minutes, hours] = [0, 0, 0];
 
-function displayTimer() {
+function displayTimer(idx = 0) {
+  var timerRef = document.getElementsByClassName("timerDisplay")[idx];
+  // if (task_list.includes())
+
   seconds++;
 
   if (seconds == 60) {
@@ -213,17 +217,24 @@ function displayTimer() {
   time = `${h}h${m}m${s}s`;
 }
 
-var startTimer = document.getElementById("startTimer");
-console.log("click");
+function startTimer(idx) {
+  console.log("click");
+  // let int = null;
 
-if (startTimer) {
-  document.getElementById("startTimer").addEventListener("click", () => {
-    if (int !== null) {
-      clearInterval(int);
-    }
-    int = setInterval(displayTimer, 1000);
-  });
+  // if (int !== null) {
+  //   clearInterval(int);
+  // }
+  // int =
 }
+
+setInterval(displayTimer, 1000);
+
+// var startTimer = document.getElementById("startTimer");
+// console.log("click");
+
+// if (startTimer) {
+//   document.getElementById("startTimer").addEventListener("click", () => {});
+// }
 
 function listAllSoftware() {
   var items = document.getElementsByClassName("taskName");
