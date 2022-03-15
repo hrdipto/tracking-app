@@ -6,35 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link href="style2.css" rel="stylesheet" />
-    <style>
-      a {
-        text-decoration: none;
-        display: inline-block;
-        padding: 20px;
-        font-size: 35px;
-        width: 40px;
-        text-align: center;
-      }
-      .next:hover {
-        background-color: rgb(121, 37, 133);
-        color: white;
-      }
-
-      .next {
-        border-radius: 50%;
-        background-color: rgb(68, 30, 112);
-        color: white;
-      }
-    </style>
   </head>
   <body>
-    <form>
-      <label for="xid">Enter your ID</label><br />
-      <input type="text" id="xid" name="xid" /><br />
+    <form class="userid-field">
+      <label for="xid" class="xid-label">Enter your ID</label><br />
+      <input type="text" id="xid" name="xid" />
       <a href="task-pick.html" class="next" id="formSubmit">›</a>
     </form>
-    <script>
-      require("./renderer.js");
-    </script>
+    <script src="userid.js"></script>
   </body>
 </html>

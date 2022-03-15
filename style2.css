@@ -9,6 +9,45 @@
   max-width: 300px;
 }
 
+a {
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+ul {
+  list-style: decimal;
+}
+.next:hover {
+  background-color: rgb(121, 37, 133);
+  color: white;
+}
+
+.next {
+  border-radius: 50%;
+  background-color: rgb(68, 30, 112);
+  color: white;
+  width: 49px;
+  height: 50px;
+  padding: 4px;
+  font-size: 35px;
+}
+
+#xid {
+  height: 32px;
+  width: 300px;
+}
+
+.xid-label {
+  font-size: 30px;
+  color: #fff;
+}
+
+.userid-field {
+  margin: auto;
+  width: 500px;
+}
+
 .custom-select-wrapper {
   position: relative;
   user-select: none;
