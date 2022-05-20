@@ -21,6 +21,7 @@
     "nodemon": "^2.0.0"
   },
   "dependencies": {
-    "fetch-installed-software": "^0.0.7"
+    "fetch-installed-software": "^0.0.7",
+    "mongoose": "^6.3.3"
   }
 }

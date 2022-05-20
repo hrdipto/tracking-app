@@ -1,7 +1,7 @@
 // Modules
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
-
+const User = require("./models/user");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -32,7 +32,7 @@ function createWindow() {
   });
 }
 
-ipcMain.on("userid", (e, userID) => {
+ipcMain.on("userid", async (e, userID) => {
   fs.writeFile("uid.txt", userID, (err) => {
     console.log(userID);
     if (err) {
@@ -41,6 +41,22 @@ ipcMain.on("userid", (e, userID) => {
     }
     //file written successfully
   });
+
+  const demo = {
+    username: "habiburrahmandipto",
+    id: userID,
+    email: "dipto@brainstation-23.com",
+  };
+  const newUser = User(demo);
+
+  console.log(newUser);
+
+  const userSaved = await newUser.save(function (error) {
+    console.log("user save");
+    console.log(error);
+  });
+
+  console.log("new user created", userSaved);
 });
 
 ipcMain.on("savetask", (e, saveTask) => {
