@@ -17,11 +17,12 @@
   "author": "GitHub, Stackacademytv",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^9.0.0",
+    "electron": "^18.2.4",
     "nodemon": "^2.0.0"
   },
   "dependencies": {
     "fetch-installed-software": "^0.0.7",
-    "mongoose": "^6.3.3"
+    "mongoose": "^6.3.3",
+    "sudo-prompt": "^9.2.1"
   }
 }

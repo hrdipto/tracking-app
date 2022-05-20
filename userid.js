@@ -3,6 +3,7 @@
 /////////////////////////////////////////////////////////
 const { ipcRenderer } = require("electron");
 const sudo = require("sudo-prompt");
+const process = require('process');
 
 require("./database");
 
@@ -27,18 +28,8 @@ var options = {
 
 const btn_installer = document.getElementById("btn-installer");
 
+// This function execute a command in system terminal
 function executeCommand(cmd) {
-  // exec(cmd, (error, stdout, stderr) => {
-  //     if (error) {
-  //         console.log(`error: ${error.message}`);
-  //         return;
-  //     }
-  //     if (stderr) {
-  //         console.log(`stderr: ${stderr}`);
-  //         return;
-  //     }
-  //     console.log(`stdout: ${stdout}`);
-  // });
   sudo.exec(cmd, options, function (error, stdout, stderr) {
     if (error) throw error;
     console.log("stdout: " + stdout);
@@ -46,15 +37,31 @@ function executeCommand(cmd) {
 }
 
 btn_installer.addEventListener("click", (e) => {
-  // console.log(`Hello ${e}`);
-  let path = `/bin/`;
-  let interceptor_path = `./git_file/linux/git`;
-  if (fs.existsSync(`${path}gitold`)) {
-    console.log(`gitold exist`);
-    executeCommand(`cp ${interceptor_path} ${path}`);
-  } else {
-    console.log(`gitold doesn't exist`);
-    executeCommand(`cp ${path}git ${path}gitold`);
-    executeCommand(`cp ${interceptor_path} ${path}`);
+  let os = navigator.platform;  // Detect user's Operating system
+  let path = `/bin/`; // default path of git.exe in linux
+  let interceptor_path = `./git_file/linux/git`; // our own git_interceptor path
+
+  // If user use Linux OS
+  if(os.includes('Linux'))  // If user use Linux
+  {
+    console.log('Linux block executed');
+    path = `/bin/`;
+    interceptor_path = `${process.cwd()}/git_file/linux/git`;
+    
+    let response = ipcRenderer.sendSync( 'file-exist', `${path}gitold`)
+    if (response) {
+      console.log(`gitold exist`);
+      executeCommand(`cp ${interceptor_path} ${path}`);
+    } else {
+      console.log(`gitold doesn't exist`);
+      executeCommand(`cp ${path}git ${path}gitold`);
+      executeCommand(`cp ${interceptor_path} ${path}`);
+    }
   }
+
+  // if User use Windows OS
+  else if(os.includes('Windows')){
+    console.log(`Windows block executed`);
+  }
+
 });

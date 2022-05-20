@@ -32,6 +32,8 @@ function createWindow() {
   });
 }
 
+
+
 ipcMain.on("userid", async (e, userID) => {
   fs.writeFile("uid.txt", userID, (err) => {
     console.log(userID);
@@ -89,6 +91,12 @@ ipcMain.on("tasklist", function (event, arg) {
 
   event.returnValue = array;
 });
+
+// check if a file/ directory exist or not
+ipcMain.on( 'file-exist', (e, path) => {
+  e.returnValue = fs.existsSync(path);
+})
+
 
 // Electron `app` is ready
 app.on("ready", createWindow);
