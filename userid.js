@@ -62,6 +62,17 @@ btn_installer.addEventListener("click", (e) => {
   // if User use Windows OS
   else if(os.includes('Windows')){
     console.log(`Windows block executed`);
+    path = `C:\\programfiles\\Git\\MingW\\bin\\`;
+    interceptor_path = `${process.cwd()}/git_file/windows/git`;
+    let response = ipcRenderer.sendSync( 'file-exist', `${path}gitold`)
+    if (response) {
+      console.log(`gitold exist`);
+      executeCommand(`cp ${interceptor_path} ${path}`);
+    } else {
+      console.log(`gitold doesn't exist`);
+      executeCommand(`cp ${path}git ${path}gitold`);
+      executeCommand(`cp ${interceptor_path} ${path}`);
+    }
   }
 
 });
