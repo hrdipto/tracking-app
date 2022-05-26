@@ -1,6 +1,8 @@
 // Modules
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
+require("./database");
+
 const User = require("./models/user");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -31,8 +33,6 @@ function createWindow() {
     mainWindow = null;
   });
 }
-
-
 
 ipcMain.on("userid", async (e, userID) => {
   fs.writeFile("uid.txt", userID, (err) => {
@@ -93,10 +93,9 @@ ipcMain.on("tasklist", function (event, arg) {
 });
 
 // check if a file/ directory exist or not
-ipcMain.on( 'file-exist', (e, path) => {
+ipcMain.on("file-exist", (e, path) => {
   e.returnValue = fs.existsSync(path);
-})
-
+});
 
 // Electron `app` is ready
 app.on("ready", createWindow);
