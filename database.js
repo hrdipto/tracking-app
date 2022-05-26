@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 mongoose
-  .connect("mongodb://localhost/my_database", { useMongoClient: true })
-  .then((db) => console.log("DB is connected", db))
+  .connect("mongodb://localhost:27017/test", { useNewUrlParser: true })
+  .then((db) => console.log("DB is connected"))
   .catch((err) => console.log(err));
+
