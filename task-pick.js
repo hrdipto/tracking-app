@@ -13,158 +13,220 @@ var temp = {
   },
   projects: [
     {
-      id: 1,
+      id: 1, 
       name: "Automated Time Entry",
       boards: [
         {
           name: "Sprint 1",
-          cards: [
+          // cards: [
+          //   {
+          //     name: "Create a task tracker app using Electron",
+          //     e: "Create an app",
+          tasks: [
             {
-              name: "Create a task tracker app using Electron",
-              e: "Create an app",
-              tasks: [
+              id: 41,
+              name: "Learn and explore electron",
+              times: [
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
+                  "start": "01: 05: 32",
+                  "end": "13: 09: 12"
                 },
                 {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["chrome", "vs code"],
             },
             {
-              name: "Update Module",
-              e: "Create an app",
-              tasks: [
+              id: 42,
+              name: "1d 4h",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["vs code", "chrome"],
             },
           ],
+            // },
+            // {
+            //   name: "Update Module",
+            //   e: "Create an app",
+          // tasks: [
+          //   {
+          //     id: 41,
+          //     name: "Learn and explore electron",
+          //     time: "2d",
+          //     softwares: ["chrome", "vs code"],
+          //   },
+          //   {
+          //     id: 42,
+          //     nam: "1d 4h",
+          //     softwares: ["vs code", "chrome"],
+          //   },
+          // ],
+          //   },
+          // ],
         },
         {
           name: "Sprint 2",
-          cards: [
+          // cards: [
+          //   {
+          //     name: "Built knowledge base dialog",
+          //     e: "Create an app",
+          tasks: [
             {
-              name: "Built knowledge base dialog",
-              e: "Create an app",
-              tasks: [
+              id: 41,
+              name: "Learn and explore electron",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["chrome", "vs code"],
             },
             {
-              name: "deploy base dialog",
-              e: "Create an app",
-              tasks: [
+              id: 42,
+              name: "1d 4h",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["vs code", "chrome"],
             },
           ],
+            // },
+            // {
+            //   name: "deploy base dialog",
+            //   e: "Create an app",
+            //   tasks: [
+            //     {
+            //       id: 41,
+            //       name: "Learn and explore electron",
+            //       time: "2d",
+            //       softwares: ["chrome", "vs code"],
+            //     },
+            //     {
+            //       id: 42,
+            //       nam: "1d 4h",
+            //       softwares: ["vs code", "chrome"],
+            //     },
+            //   ],
+            // },
+          // ],
         },
       ],
     },
     {
-      id: 1,
+      id: 2,
       name: "Automated Life Entry",
       boards: [
         {
           name: "Sprint 2",
-          cards: [
+          // cards: [
+          //   {
+          //     name: "Create a task tracker app using Electron",
+          //     e: "Create an app",
+          tasks: [
             {
-              name: "Create a task tracker app using Electron",
-              e: "Create an app",
-              tasks: [
+              id: 41,
+              name: "Learn and explore electron",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["chrome", "vs code"],
+            },
+            {
+              id: 42,
+              name: "1d 4h",
+              times:[
+                {
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
+              ],
+              softwares: ["vs code", "chrome"],
             },
           ],
+          //   },
+          // ],
         },
         {
           name: "Sprint 3",
-          cards: [
+          // cards: [
+          //   {
+          //     name: "Radassist Update",
+          //     e: "Create an app",
+          tasks: [
             {
-              name: "Radassist Update",
-              e: "Create an app",
-              tasks: [
+              id: 41,
+              name: "Learn and explore electron",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["chrome", "vs code"],
             },
             {
-              name: "Keycloak setup",
-              e: "Create an app",
-              tasks: [
+              id: 42,
+              name: "1d 4h",
+              times:[
                 {
-                  id: 41,
-                  name: "Learn and explore electron",
-                  time: "2d",
-                  softwares: ["chrome", "vs code"],
-                },
-                {
-                  id: 42,
-                  nam: "1d 4h",
-                  softwares: ["vs code", "chrome"],
-                },
+                  "start": "04: 02: 18",
+                  "end": "15: 32: 26"
+                }
               ],
+              softwares: ["vs code", "chrome"],
             },
           ],
+            // },
+            // {
+            //   name: "Keycloak setup",
+            //   e: "Create an app",
+          // tasks: [
+          //   {
+          //     id: 41,
+          //     name: "Learn and explore electron",
+          //     time: "2d",
+          //     softwares: ["chrome", "vs code"],
+          //   },
+          //   {
+          //     id: 42,
+          //     nam: "1d 4h",
+          //     softwares: ["vs code", "chrome"],
+          //   },
+          // ],
+          //   },
+          // ],
         },
       ],
     },
   ],
+  "commit": [
+    {
+      "root": "az8by28g6agh1j27s65t",
+      "tree": "aslks8aha8s6A8amza",
+      "blob": ["a8ai2k2ika9aa", "aka8a6a1", "akai1i1isa86"]
+    },
+    {
+      "root": "b81ka89a67j2k2hag",
+      "tree": "c3nbls8akqjahgskah",
+      "blob": ["f2asdmasjhdsjk", "j38ak2a6a1", "aks82jk11isa86"]
+    }
+  ]
 };
+
+
 
 ////////////////////    Project      //////////////////
 
