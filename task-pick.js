@@ -417,7 +417,7 @@ function cardUpdate(boardRef, projectRef) {
       var boards = temp["projects"][i]["boards"];
       for (var j = 0; j < boards.length; j++) {
         if (boards[j]["name"] === boardRef) {
-          tasks = boards[j]["cards"];
+          tasks = boards[j]["tasks"];
           for (var k = 0; k < tasks.length; k++) {
             htmlText +=
               "<input type='checkbox' name='task_list' value='" +

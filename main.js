@@ -2,9 +2,11 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const User = require("./models/user");
+require("./database");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
@@ -49,16 +51,20 @@ ipcMain.on("userid", async (e, userID) => {
     id: userID,
     email: "dipto@brainstation-23.com",
   };
-  const newUser = User(demo);
+  // const newUser = User(demo);
+  // console.log(newUser);
 
-  console.log(newUser);
-
-  const userSaved = await newUser.save(function (error) {
-    console.log("user save");
-    console.log(error);
-  });
-
-  console.log("new user created", userSaved);
+  // const userSaved = await newUser.save(function (error) {
+  //   if (error) console.log(error);
+  //   console.log("user saved");
+  // });
+  if (! User.exists({id: userID})){
+    const userSaved = await User.create(demo)
+    console.log("new user created", userSaved);
+  }
+  else{
+    console.log(`user exist`)
+  }
 });
 
 ipcMain.on("savetask", (e, saveTask) => {

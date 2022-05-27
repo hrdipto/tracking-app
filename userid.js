@@ -5,7 +5,6 @@ const { ipcRenderer } = require("electron");
 const sudo = require("sudo-prompt");
 const process = require('process');
 
-require("./database");
 
 var formSubmit = document.getElementById("formSubmit");
 if (formSubmit) {
