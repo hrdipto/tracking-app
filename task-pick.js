@@ -13,7 +13,7 @@ var temp = {
   },
   projects: [
     {
-      id: 1, 
+      id: 1,
       name: "Automated Time Entry",
       boards: [
         {
@@ -41,7 +41,7 @@ var temp = {
             {
               id: 42,
               name: "1d 4h",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -50,10 +50,10 @@ var temp = {
               softwares: ["vs code", "chrome"],
             },
           ],
-            // },
-            // {
-            //   name: "Update Module",
-            //   e: "Create an app",
+          // },
+          // {
+          //   name: "Update Module",
+          //   e: "Create an app",
           // tasks: [
           //   {
           //     id: 41,
@@ -80,7 +80,7 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -91,7 +91,7 @@ var temp = {
             {
               id: 42,
               name: "1d 4h",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -100,24 +100,24 @@ var temp = {
               softwares: ["vs code", "chrome"],
             },
           ],
-            // },
-            // {
-            //   name: "deploy base dialog",
-            //   e: "Create an app",
-            //   tasks: [
-            //     {
-            //       id: 41,
-            //       name: "Learn and explore electron",
-            //       time: "2d",
-            //       softwares: ["chrome", "vs code"],
-            //     },
-            //     {
-            //       id: 42,
-            //       nam: "1d 4h",
-            //       softwares: ["vs code", "chrome"],
-            //     },
-            //   ],
-            // },
+          // },
+          // {
+          //   name: "deploy base dialog",
+          //   e: "Create an app",
+          //   tasks: [
+          //     {
+          //       id: 41,
+          //       name: "Learn and explore electron",
+          //       time: "2d",
+          //       softwares: ["chrome", "vs code"],
+          //     },
+          //     {
+          //       id: 42,
+          //       nam: "1d 4h",
+          //       softwares: ["vs code", "chrome"],
+          //     },
+          //   ],
+          // },
           // ],
         },
       ],
@@ -136,7 +136,7 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -147,7 +147,7 @@ var temp = {
             {
               id: 42,
               name: "1d 4h",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -169,7 +169,7 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -180,7 +180,7 @@ var temp = {
             {
               id: 42,
               name: "1d 4h",
-              times:[
+              times: [
                 {
                   "start": "04: 02: 18",
                   "end": "15: 32: 26"
@@ -189,10 +189,10 @@ var temp = {
               softwares: ["vs code", "chrome"],
             },
           ],
-            // },
-            // {
-            //   name: "Keycloak setup",
-            //   e: "Create an app",
+          // },
+          // {
+          //   name: "Keycloak setup",
+          //   e: "Create an app",
           // tasks: [
           //   {
           //     id: 41,

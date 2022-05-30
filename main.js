@@ -2,10 +2,13 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const User = require("./models/user");
+const Task = require("./models/task");
+const { mongoose, Schema, SchemaType } = require("mongoose");
 require("./database");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
+let userSaved;
 
 
 // Create a new BrowserWindow when `app` is ready
@@ -34,6 +37,7 @@ function createWindow() {
   });
 }
 
+
 ipcMain.on("userid", async (e, userID) => {
   fs.writeFile("uid.txt", userID, (err) => {
     console.log(userID);
@@ -56,9 +60,9 @@ ipcMain.on("userid", async (e, userID) => {
   //   if (error) console.log(error);
   //   console.log("user saved");
   // });
-  console.log(await User.exists({ id: userID }))
+  // console.log(await User.exists({ id: userID }))
   if (! await User.exists({ id: userID })) {
-    const userSaved = await User.create(demo)
+    userSaved = await User.create(demo)
     console.log("new user created", userSaved);
   }
   else {
@@ -66,7 +70,7 @@ ipcMain.on("userid", async (e, userID) => {
   }
 });
 
-ipcMain.on("savetask", (e, saveTask) => {
+ipcMain.on("savetask", async (e, saveTask) => {
   var file = fs.createWriteStream("tasks.txt");
   console.log("main.js" + saveTask);
   var array = new Set(fs.readFileSync("tasks.txt", "utf8").split("\n"));
@@ -75,20 +79,33 @@ ipcMain.on("savetask", (e, saveTask) => {
     file.write(task + "\n");
   }
   file.end();
+  console.log(...saveTask)
+  const task = {
+    project: {
+      id: 2,
+      name: "a",
+      user: mongoose.Types.ObjectId("6294955631cb460fa82f68e6"),
+      boards: [{
+        id: 22,
+        name: "ab",
+        tasks: [{
+          id: 1,
+          name: "saveTask[1]",
+          times: null,
+          softwares: ['1', '2']
+        }, {
+          id: 2,
+          name: "saveTask[2]",
+          times: null,
+          softwares: ['1', '2']
+        }]
+      }]
+    }
+  };
+  console.log(task)
+  const taskSaved = await Task.create(task)
+  console.log("new user created", taskSaved);
 
-  // fs.writeFile("tasks.txt", saveTask, (err) => {
-  //   console.log(saveTask);
-  //   if (err) {
-  //     console.error(err);
-  //     return;
-  //   }
-  //   //file written successfully
-  // });
-  // fs.appendFile("tasks.txt", task + "\n", (err) => {
-  //   if (err) {
-  //     console.log(err);
-  //   }
-  // });
 });
 
 ipcMain.on("tasklist", function (event, arg) {
