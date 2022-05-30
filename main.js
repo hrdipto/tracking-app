@@ -1,8 +1,6 @@
 // Modules
 const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
-require("./database");
-
 const User = require("./models/user");
 require("./database");
 // Keep a global reference of the window object, if you don't, the window will
@@ -58,11 +56,12 @@ ipcMain.on("userid", async (e, userID) => {
   //   if (error) console.log(error);
   //   console.log("user saved");
   // });
-  if (! User.exists({id: userID})){
+  console.log(await User.exists({ id: userID }))
+  if (! await User.exists({ id: userID })) {
     const userSaved = await User.create(demo)
     console.log("new user created", userSaved);
   }
-  else{
+  else {
     console.log(`user exist`)
   }
 });

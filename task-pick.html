@@ -1,65 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link href="style2.css" rel="stylesheet" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="project-select-wrapper custom-select-wrapper">
-        <div class="project-select custom-select">
-          <div class="project-select__trigger custom-select__trigger">
-            <span>Select Project</span>
-            <div class="arrow"></div>
-          </div>
-          <div class="project-options custom-options" id="project"></div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link href="style2.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="project-select-wrapper custom-select-wrapper">
+      <div class="project-select custom-select">
+        <div class="project-select__trigger custom-select__trigger">
+          <span>Select Project</span>
+          <div class="arrow"></div>
         </div>
+        <div class="project-options custom-options" id="project"></div>
       </div>
     </div>
-    <div class="container">
-      <div class="board-select-wrapper custom-select-wrapper">
-        <div class="board-select custom-select">
-          <div class="board-select__trigger custom-select__trigger">
-            <span>Select Board</span>
-            <div class="arrow"></div>
-          </div>
-          <div class="board-options custom-options" id="board"></div>
+  </div>
+  <div class="container">
+    <div class="board-select-wrapper custom-select-wrapper">
+      <div class="board-select custom-select">
+        <div class="board-select__trigger custom-select__trigger">
+          <span>Select Board</span>
+          <div class="arrow"></div>
         </div>
+        <div class="board-options custom-options" id="board"></div>
       </div>
     </div>
-    <div class="scrollablepart">
-      <div class="scroll">
-        <fieldset>
-          <legend>Select task:</legend>
-          <div id="taskList"></div>
-          <a id="taskbtn">Save</a>
-        </fieldset>
-      </div>
-    </div>
-    <h1>Saved List :</h1>
+  </div>
+  <div class="scrollablepart">
     <div class="scroll">
-      <ul id="taskName">
-        <li>
-          <div class="taskList">
-            <span class="taskName">2. Example Task</span>
-            <span class="timerDisplay">00 : 00 : 00 </span>
-
-            <a id="removeTask">Remove</a>
-          </div>
-        </li>
-      </ul>
+      <fieldset>
+        <legend>Select task:</legend>
+        <div id="taskList"></div>
+        <a id="taskbtn">Save</a>
+      </fieldset>
     </div>
+  </div>
+  <h1>Saved List :</h1>
+  <div class="scroll">
+    <ul id="taskName">
+      <li>
+        <div class="taskList">
+          <span class="taskName">2. Example Task</span>
+          <span class="timerDisplay">00 : 00 : 00 </span>
 
-    <a href="#" class="a-12" role="a" id="saveTask">Save</a>
-    <a href="time-entry.html" id="time-entry" class="a-12" role="a">
-      Start Tracking
-    </a>
+          <a id="removeTask">Remove</a>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-    <script src="task-pick.js">
+  <a href="#" class="a-12" role="a" id="saveTask">Save</a>
+  <a href="time-entry.html" id="time-entry" class="a-12" role="a">
+    Start Tracking
+  </a>
+
+  <script src="task-pick.js">
       // You can also require other files to run in this process
-    </script>
-  </body>
+  </script>
+</body>
+
 </html>
