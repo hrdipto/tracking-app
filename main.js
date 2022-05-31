@@ -38,6 +38,11 @@ function createWindow() {
 }
 
 
+ipcMain.on("activeTask", async (e, activeTask) => {
+  console.log("Task Recieved", activeTask);
+});
+
+
 ipcMain.on("users", async (e, user) => {
   fs.writeFile("uid.txt", JSON.stringify(user), (err) => {
     console.log(user);
@@ -48,6 +53,8 @@ ipcMain.on("users", async (e, user) => {
     //file written successfully
   });
 
+
+  
   
   // const newUser = User(demo);
   // console.log(newUser);
@@ -106,8 +113,9 @@ ipcMain.on("savetask", async (e, saveTask) => {
 
 ipcMain.on("tasklist", function (event, arg) {
   var array = fs.readFileSync("tasks.txt", "utf8").split("\n");
+  var trimmedArray = array.filter(function (e) {return e != null;});
 
-  event.returnValue = array;
+  event.returnValue = trimmedArray;
 });
 
 // check if a file/ directory exist or not
