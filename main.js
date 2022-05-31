@@ -10,6 +10,10 @@ require("./database");
 let mainWindow;
 let userSaved;
 
+let rawdata = fs.readFileSync('uid.txt');
+const currentUser = JSON.parse(rawdata);
+console.log(currentUser.id);
+
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
@@ -82,32 +86,36 @@ ipcMain.on("savetask", async (e, saveTask) => {
     file.write(task + "\n");
   }
   file.end();
-  console.log(...saveTask)
-  const task = {
-    project: {
-      id: 2,
-      name: "a",
-      user: mongoose.Types.ObjectId("6294955631cb460fa82f68e6"),
-      boards: [{
-        id: 22,
-        name: "ab",
-        tasks: [{
-          id: 1,
-          name: "saveTask[1]",
-          times: null,
-          softwares: ['1', '2']
-        }, {
-          id: 2,
-          name: "saveTask[2]",
-          times: null,
-          softwares: ['1', '2']
-        }]
-      }]
+  const taskUser = await User.where("id").equals(currentUser.id).select("_id")
+  taskUid = taskUser[0]._id
+  let selected_task = []
+  for (let task_name of saveTask){
+    console.log(task_name)
+    tem = {
+      id: Math.floor(Math.random() * 100),
+      name: task_name
     }
-  };
-  console.log(task)
-  const taskSaved = await Task.create(task)
-  console.log("new user created", taskSaved);
+    selected_task.push(tem);
+  }
+  console.log(selected_task)
+
+
+  if (! await Task.exists({ user: taskUid })) {
+    let task = {
+      user: taskUid,
+      tasks: selected_task
+    }
+    const taskSaved = await Task.create(task)
+    console.log("new task created", taskSaved);
+  }
+  else{
+    let task = await Task.findOne({user: taskUid});
+    task.tasks = selected_task;
+    console.log('task updated')
+  }
+  
+
+  
 
 });
 
