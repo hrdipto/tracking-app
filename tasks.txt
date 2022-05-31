@@ -1,7 +1,3 @@
 
-
-Create a task tracker app using Electron
-Update ModuleRadassist Update
-Keycloak setup
 Learn and explore electron
 1d 4h

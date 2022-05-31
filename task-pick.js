@@ -26,28 +26,10 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times: [
-                {
-                  "start": "01: 05: 32",
-                  "end": "13: 09: 12"
-                },
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["chrome", "vs code"],
             },
             {
               id: 42,
               name: "1d 4h",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["vs code", "chrome"],
             },
           ],
           // },
@@ -80,45 +62,13 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["chrome", "vs code"],
             },
             {
               id: 42,
-              name: "1d 4h",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["vs code", "chrome"],
+              name: "Register NPM packages",
             },
           ],
-          // },
-          // {
-          //   name: "deploy base dialog",
-          //   e: "Create an app",
-          //   tasks: [
-          //     {
-          //       id: 41,
-          //       name: "Learn and explore electron",
-          //       time: "2d",
-          //       softwares: ["chrome", "vs code"],
-          //     },
-          //     {
-          //       id: 42,
-          //       nam: "1d 4h",
-          //       softwares: ["vs code", "chrome"],
-          //     },
-          //   ],
-          // },
-          // ],
+        
         },
       ],
     },
@@ -136,24 +86,10 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["chrome", "vs code"],
             },
             {
               id: 42,
               name: "1d 4h",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["vs code", "chrome"],
             },
           ],
           //   },
@@ -169,24 +105,10 @@ var temp = {
             {
               id: 41,
               name: "Learn and explore electron",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["chrome", "vs code"],
             },
             {
               id: 42,
               name: "1d 4h",
-              times: [
-                {
-                  "start": "04: 02: 18",
-                  "end": "15: 32: 26"
-                }
-              ],
-              softwares: ["vs code", "chrome"],
             },
           ],
           // },

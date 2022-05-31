@@ -1,1 +1,1 @@
-1234
+{"id":"1234","username":"k","email":"k@gmail.com"}

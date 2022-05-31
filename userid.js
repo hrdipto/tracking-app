@@ -11,8 +11,13 @@ var formSubmit = document.getElementById("formSubmit");
 if (formSubmit) {
   formSubmit.addEventListener("click", () => {
     console.log("CLICK");
-    var userID = document.getElementById("xid").value;
-    ipcRenderer.send("userid", userID);
+    var id = document.getElementById("xid").value;
+    var username = document.getElementById("xusername").value;
+    var email = document.getElementById("xemail").value;
+    ipcRenderer.send("users", {
+      id,
+      username, email
+    });
   });
 }
 

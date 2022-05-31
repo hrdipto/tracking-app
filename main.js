@@ -38,9 +38,9 @@ function createWindow() {
 }
 
 
-ipcMain.on("userid", async (e, userID) => {
-  fs.writeFile("uid.txt", userID, (err) => {
-    console.log(userID);
+ipcMain.on("users", async (e, user) => {
+  fs.writeFile("uid.txt", JSON.stringify(user), (err) => {
+    console.log(user);
     if (err) {
       console.error(err);
       return;
@@ -48,11 +48,7 @@ ipcMain.on("userid", async (e, userID) => {
     //file written successfully
   });
 
-  const demo = {
-    username: "habiburrahmandipto",
-    id: userID,
-    email: "dipto@brainstation-23.com",
-  };
+  
   // const newUser = User(demo);
   // console.log(newUser);
 
@@ -61,8 +57,8 @@ ipcMain.on("userid", async (e, userID) => {
   //   console.log("user saved");
   // });
   // console.log(await User.exists({ id: userID }))
-  if (! await User.exists({ id: userID })) {
-    userSaved = await User.create(demo)
+  if (! await User.exists({ id: user.id })) {
+    userSaved = await User.create(user)
     console.log("new user created", userSaved);
   }
   else {

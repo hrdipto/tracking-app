@@ -5,15 +5,17 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <title>Login Page</title>
   <link href="style2.css" rel="stylesheet" />
 </head>
 
 <body>
   <form class="userid-field">
-    <label for="xid" class="xid-label">Enter your ID</label><br />
-    <input type="text" id="xid" name="xid" />
-    <a href="task-pick.html" class="next" id="formSubmit">›</a>
+    <label id="user-info" for="xid" class="xid-label">Enter your information</label><br />
+    <input type="text" placeholder="id" id="xid" name="xid" />
+    <input type="text" id="xusername" placeholder="username" name="xusername" />
+    <input type="email" id="xemail" placeholder="email" name="xemail" />
+    <a href="task-pick.html" class="next" id="formSubmit">Sign Up</a>
   </form>
   <button id="btn-installer" style="background-color: rgb(32, 221, 32)">
     Install
