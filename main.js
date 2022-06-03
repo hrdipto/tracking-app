@@ -3,6 +3,8 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const User = require("./models/user");
 const Task = require("./models/task");
+
+
 const { mongoose, Schema, SchemaType } = require("mongoose");
 require("./database");
 // Keep a global reference of the window object, if you don't, the window will
@@ -44,6 +46,24 @@ function createWindow() {
 
 ipcMain.on("activeTask", async (e, activeTask) => {
   console.log("Task Recieved", activeTask);
+  const taskUser = await User.where("id").equals(currentUser.id).select("_id")
+  taskUid = taskUser[0]._id
+  let newTask = {
+    user: taskUid,
+    tasks: []
+  }
+  activeTask.map((task) => {
+    const temp = {
+      id: task.idx,
+      name: task.taskName,
+      time: task.time,
+      softwares: task.software,
+    }
+    newTask.tasks.push(temp)
+  })
+  const t = await Task.create(newTask);
+
+  console.log(`time entry added ${newTask}`);
 });
 
 

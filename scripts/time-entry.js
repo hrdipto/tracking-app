@@ -382,6 +382,9 @@ document.getElementById("stopTimer").addEventListener("click", () => {
   // temp["projects"][0]["boards"][0]["cards"][0]["tasks"][0] = timeTask;
 
   // console.log(temp);
+  activeTask.map((task) => {
+    task.time = `${task.hours}:${task.minutes}:${task.seconds}`
+  })
 
   console.log("object: ", activeTask);
 

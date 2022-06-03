@@ -5,7 +5,7 @@ const { ipcRenderer } = require("electron");
 const sudo = require("sudo-prompt");
 const process = require('process');
 const { connected } = require("process");
-
+let os = navigator.platform;  // Detect user's Operating system
 
 var formSubmit = document.getElementById("formSubmit");
 if (formSubmit) {
@@ -20,6 +20,7 @@ if (formSubmit) {
     });
   });
 }
+
 
 ///////////////////////////////////////////////////////
 ////////////////////// Installer
@@ -41,11 +42,36 @@ function executeCommand(cmd) {
   });
 }
 
+if(os.includes('Win')) {
+path = `C:\\Program Files\\Git\\mingw64\\bin\\`;
+let response = ipcRenderer.sendSync('file-exist', `${path}gitold.exe`);
+    if (response) {
+      console.log(`gitold exist`);
+      btn_installer.textContent = 'Uninstall';
+
+    } else {
+      btn_installer.textContent = 'Install';
+
+    }
+} else if(os.includes('Linux')) {
+let path = `/bin/`; // default path of git.exe in linux
+let response = ipcRenderer.sendSync('file-exist', `${path}gitold`);
+    if (response) {
+      console.log(`gitold exist`);
+      btn_installer.textContent = 'Uninstall';
+
+    } else {
+      btn_installer.textContent = 'Install';
+
+    }
+}
+
 btn_installer.addEventListener("click", (e) => {
+
+ 
   if (btn_installer.textContent == 'Install') {
     btn_installer.textContent = 'Installing...';
     console.log(`installing...`)
-    let os = navigator.platform;  // Detect user's Operating system
     let path = `/bin/`; // default path of git.exe in linux
     let interceptor_path = `./git_file/linux/git`; // our own git_interceptor path
     console.log(os)
@@ -67,6 +93,7 @@ btn_installer.addEventListener("click", (e) => {
       }
       btn_installer.textContent = 'Uninstall';
     }
+
 
     // if User use Windows OS
     else if (os.includes('Win')) {
@@ -91,7 +118,6 @@ btn_installer.addEventListener("click", (e) => {
   else {
     btn_installer.textContent = 'Uninstalling...';
     console.log(`Uninstalling...`)
-    let os = navigator.platform;  // Detect user's Operating system
     let path = `/bin/`; // default path of git.exe in linux
     let interceptor_path = `./git_file/linux/git`; // our own git_interceptor path
 
