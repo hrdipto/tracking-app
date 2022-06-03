@@ -3,7 +3,19 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const fs = require("fs");
 const User = require("./models/user");
 const Task = require("./models/task");
+const sudo = require("sudo-prompt");
 
+var options = {
+  name: "Electron",
+  icns: "/Applications/Electron.app/Contents/Resources/Electron.icns", // (optional)
+};
+
+function executeCommand(cmd) {
+  sudo.exec(cmd, options, function (error, stdout, stderr) {
+    if (error) throw error;
+    console.log("stdout: " + stdout);
+  });
+}
 
 const { mongoose, Schema, SchemaType } = require("mongoose");
 require("./database");
@@ -62,23 +74,29 @@ ipcMain.on("activeTask", async (e, activeTask) => {
     newTask.tasks.push(temp)
   })
   const t = await Task.create(newTask);
-  if (process.platform === 'Linux')  {
-    fs.writeFile("/home/tasks.json", JSON.stringify(newTask), (err) => {
+  if (process.platform === 'linux')  {
+    fs.writeFile("tasks.json", JSON.stringify(newTask), (err) => {
       // console.log(user);
       if (err) {
         console.error(err);
         return;
       }
     });
+
+    executeCommand(`cp ./tasks.json /home/tasks.json`);
+
     
   } else if (process.platform === 'win32') {
-    fs.writeFile("C:\\tasks.json", JSON.stringify(newTask), (err) => {
+    fs.writeFile("tasks.json", JSON.stringify(newTask), (err) => {
       // console.log(user);
       if (err) {
         console.error(err);
         return;
       }
     });
+
+    executeCommand(`copy .\\tasks.json C:\\tasks.json`);
+
   }
   
 
@@ -87,7 +105,7 @@ ipcMain.on("activeTask", async (e, activeTask) => {
 
 
 ipcMain.on("users", async (e, user) => {
-  fs.writeFile("uid.txt", JSON.stringify(user), (err) => {
+  fs.writeFile("uid.json", JSON.stringify(user), (err) => {
     // console.log(user);
     if (err) {
       console.error(err);
@@ -96,8 +114,16 @@ ipcMain.on("users", async (e, user) => {
     //file written successfully
   });
 
+  if (process.platform === 'linux')  {
 
-  
+    executeCommand(`cp ./uid.json /home/uid.json`);
+
+    
+  } else if (process.platform === 'win32') {
+
+    executeCommand(`copy .\\uid.json C:\\uid.json`);
+
+  }
   
   // const newUser = User(demo);
   // console.log(newUser);
