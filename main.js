@@ -119,7 +119,13 @@ ipcMain.on("users", async (e, user) => {
 ipcMain.on("savetask", async (e, saveTask) => {
   var file = fs.createWriteStream("tasks.txt");
   console.log("main.js" + saveTask);
-  var array = new Set(fs.readFileSync("tasks.txt", "utf8").split("\n"));
+  var array = fs.readFileSync("tasks.txt", "utf8").split("\n");
+  const filterArray = array.filter(element => {
+    return element !== '' && element !== '\n';
+  });
+
+  array = new Set(filterArray);
+
   saveTask = new Set([...array, ...saveTask]);
   for (let task of saveTask) {
     file.write(task + "\n");

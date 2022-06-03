@@ -1,6 +1,2 @@
-
 Learn and explore electron
-1d 4h
-Build App
 Register NPM packages
-RnD Chat Bot

@@ -248,11 +248,14 @@ function startTimer(idx) {
   }
   activeTask.map((task) => {
     if (task.idx === idx) {
-      task.active = true;
-      task.times.push({start: new Date().getTime(), end: null}),
-      console.log("Task Updated");
-      console.log(activeTask)
-
+      if(!task.active) {
+        task.active = true;
+        task.times.push({start: new Date().getTime(), end: null}),
+        console.log("Task Updated");
+        console.log(activeTask);
+  
+      }
+      
     } else {
       var demo = {
         idx: idx,

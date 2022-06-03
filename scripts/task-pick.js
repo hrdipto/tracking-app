@@ -277,8 +277,3 @@ function chainSelect(current, target){
 size = chainSelect('select#project', '#board');
 color = chainSelect('select#board', '#tasks');
 
-$('#addToCart').submit(function(){
-  event.preventDefault();
-  alert('Size: ' + size + '\nColor: ' + color + '\nQuantity: ' + qty);
-});
-
