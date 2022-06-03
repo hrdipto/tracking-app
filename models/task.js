@@ -17,7 +17,14 @@ const newTaskSchema = new Schema(
           type: String,
           // required: true,
         },
-        time: String,
+        times: [{
+          start: {
+            type: String
+          }, 
+          end: {
+            type: String
+          }
+        }],
         softwares: [String]
       }]
     });

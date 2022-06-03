@@ -188,7 +188,7 @@ function timeEntry() {
         task +
         "</span><span class='timerDisplay'>00 : 00 : 00 </span><button id='pauseTimer' onClick='pauseTimer("+idx +")' >Pause</button><button class='startTimer' onclick='startTimer(" +
         idx +
-        ")'>Start</button><button id='stopTimer'>Stop</button></div><div><p>Current software: <span class='currentSoftware'></span></p></div><div class='softwareList'><label for='software'>Choose a software:</label> <select id='software' class='software'></select><button id='addSoftware' onClick='addSoftwares("+idx+")'>Add</button></div></li>";
+        ")'>Start</button><button onClick='stopTimer(" + idx +")'>Stop</button></div><div><p>Current software: <span class='currentSoftware'></span></p></div><div class='softwareList'><label for='software'>Choose a software:</label> <select id='software' class='software'></select><button id='addSoftware' onClick='addSoftwares("+idx+")'>Add</button></div></li>";
     }
   });
   taskRef.innerHTML = htmlText;
@@ -203,6 +203,7 @@ function displayTimer(idx) {
 
     if (task.active) {
       task.seconds++;
+
 
       if (task.seconds == 60) {
         task.seconds = 0;
@@ -237,6 +238,7 @@ function startTimer(idx) {
       seconds: 0,
       minutes: 0,
       hours: 0,
+      times: [{start: new Date().getTime(), end: null}],
       software: [],
       active: true,
     }
@@ -247,6 +249,7 @@ function startTimer(idx) {
   activeTask.map((task) => {
     if (task.idx === idx) {
       task.active = true;
+      task.times.push({start: new Date().getTime(), end: null}),
       console.log("Task Updated");
       console.log(activeTask)
 
@@ -257,6 +260,9 @@ function startTimer(idx) {
         seconds: 0,
         minutes: 0,
         hours: 0,
+        startime: 0,
+        endTime: 0,
+        times: [{start: new Date().getTime(), end: null}],
         software: [],
         active: true,
       }
@@ -279,6 +285,8 @@ function pauseTimer(idx) {
   activeTask.map((task) => {
     if (task.idx === idx) {
       task.active = false;
+      task.active = false;
+      task.times[task.times.length - 1].end = new Date().getTime();
     }
   })
 
@@ -364,7 +372,7 @@ function addSoftwares(idx) {
 //   console.log("Current Software for this project: ", softwareForProject);
 // });
 
-document.getElementById("stopTimer").addEventListener("click", () => {
+function stopTimer(idx) {
   // var timeTask = [];
 
   // var taskRef = document.getElementsByClassName("taskName");
@@ -389,4 +397,4 @@ document.getElementById("stopTimer").addEventListener("click", () => {
   console.log("object: ", activeTask);
 
   ipcRenderer.send("activeTask", activeTask);
-});
+};

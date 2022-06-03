@@ -16,7 +16,7 @@ let rawdata = fs.readFileSync('uid.txt');
 const currentUser = JSON.parse(rawdata);
 // console.log(currentUser.id);
 
-
+console.log(process.platform)
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -56,12 +56,31 @@ ipcMain.on("activeTask", async (e, activeTask) => {
     const temp = {
       id: task.idx,
       name: task.taskName,
-      time: task.time,
+      times: task.times,
       softwares: task.software,
     }
     newTask.tasks.push(temp)
   })
   const t = await Task.create(newTask);
+  if (process.platform === 'Linux')  {
+    fs.writeFile("/home/tasks.json", JSON.stringify(newTask), (err) => {
+      // console.log(user);
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+    
+  } else if (process.platform === 'win32') {
+    fs.writeFile("C:\\tasks.json", JSON.stringify(newTask), (err) => {
+      // console.log(user);
+      if (err) {
+        console.error(err);
+        return;
+      }
+    });
+  }
+  
 
   console.log(`time entry added ${newTask}`);
 });

@@ -1,0 +1,37 @@
+{
+    "user": "6294955631cb460fa82f68e6",
+    "tasks": [
+        {
+            "id": 1,
+            "name": "Learn and explore electron ",
+            "times": [
+                {
+                    "start": 1654251262706,
+                    "end": null
+                },
+                {
+                    "start": 1654251262706,
+                    "end": 1654251276344
+                }
+            ],
+            "softwares": [
+                "Visual Studio Build Tools 2019",
+                "qBittorrent 4.4.2"
+            ]
+        },
+        {
+            "id": 2,
+            "name": "1d 4h ",
+            "times": [
+                {
+                    "start": 1654251269552,
+                    "end": 1654251277424
+                }
+            ],
+            "softwares": [
+                "Visual Studio Build Tools 2019",
+                "vs_minshellmsires"
+            ]
+        }
+    ]
+}
