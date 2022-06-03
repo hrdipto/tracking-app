@@ -14,7 +14,7 @@ let userSaved;
 
 let rawdata = fs.readFileSync('uid.txt');
 const currentUser = JSON.parse(rawdata);
-console.log(currentUser.id);
+// console.log(currentUser.id);
 
 
 // Create a new BrowserWindow when `app` is ready
@@ -69,7 +69,7 @@ ipcMain.on("activeTask", async (e, activeTask) => {
 
 ipcMain.on("users", async (e, user) => {
   fs.writeFile("uid.txt", JSON.stringify(user), (err) => {
-    console.log(user);
+    // console.log(user);
     if (err) {
       console.error(err);
       return;
@@ -110,14 +110,14 @@ ipcMain.on("savetask", async (e, saveTask) => {
   taskUid = taskUser[0]._id
   let selected_task = []
   for (let task_name of saveTask){
-    console.log(task_name)
+    // console.log(task_name)
     tem = {
       id: Math.floor(Math.random() * 100),
       name: task_name
     }
     selected_task.push(tem);
   }
-  console.log(selected_task)
+  // console.log(selected_task)
 
 
   if (! await Task.exists({ user: taskUid })) {
